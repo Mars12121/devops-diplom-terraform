@@ -6,8 +6,8 @@ terraform {
     bucket     = "cloud-sanchez12121-terraform-state"
     region     = "ru-central1"
     key        = "infra/terraform.tfstate"
-    access_key = file("${path.module}/access_key")
-    secret_key = file("${path.module}/secret_key")
+    access_key = file("access_key")
+    secret_key = file("secret_key")
  
     skip_region_validation      = true
     skip_credentials_validation = true
