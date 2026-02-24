@@ -35,14 +35,6 @@ resource "yandex_vpc_subnet" "subnet_server" {
     depends_on = [ yandex_vpc_network.diplom-vpc ]
 }
 
-resource "yandex_vpc_subnet" "subnet_test" {
-    name = "subnet_test"
-    v4_cidr_blocks = ["10.5.0.0/24"]
-    zone           = "ru-central1-b"
-    network_id     = yandex_vpc_network.diplom-vpc.id
-    depends_on = [ yandex_vpc_network.diplom-vpc ]
-}
-
 resource "yandex_vpc_address" "static_ip" {
   name = "static_ip"
   deletion_protection = true
