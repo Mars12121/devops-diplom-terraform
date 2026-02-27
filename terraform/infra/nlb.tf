@@ -35,7 +35,6 @@ resource "yandex_lb_network_load_balancer" "k8s-nlb" {
       name = "k8s-api"
       healthy_threshold = 2
       interval = 60
-      timeout = "61s"
       unhealthy_threshold = 3
       http_options {
         port = 10256
@@ -51,7 +50,6 @@ resource "yandex_lb_network_load_balancer" "k8s-nlb" {
       name = "k8s-nodes"
       healthy_threshold = 2
       interval = 60
-      timeout = "61s"
       unhealthy_threshold = 3
       http_options {
         port = 10256
