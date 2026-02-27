@@ -32,9 +32,14 @@ resource "yandex_lb_network_load_balancer" "k8s-nlb" {
     target_group_id = yandex_lb_target_group.k8s-nlb-target.id
 
     healthcheck {
-      name = "tcp"
-      tcp_options {
-        port = 22
+      name = "k8s-api"
+      healthy_threshold = 2
+      interval = 60
+      timeout = 61
+      unhealthy_threshold = 3
+      http_options {
+        port = 10256
+        path = "/healthz"
       }
     }
   } 
@@ -43,23 +48,17 @@ resource "yandex_lb_network_load_balancer" "k8s-nlb" {
     target_group_id = yandex_lb_target_group.k8s-worker-nodes.id
 
     healthcheck {
-      name = "tcp"
-      tcp_options {
-        port = 22
+      name = "k8s-nodes"
+      healthy_threshold = 2
+      interval = 60
+      timeout = 61
+      unhealthy_threshold = 3
+      http_options {
+        port = 10256
+        path = "/healthz"
       }
     }
   }
-
-  # attached_target_group {
-  #   target_group_id = yandex_lb_target_group.jenkins.id
-
-  #   healthcheck {
-  #     name = "tcp"
-  #     tcp_options {
-  #       port = 8080
-  #     }
-  #   }
-  # }
 }
 
 resource "yandex_lb_target_group" "k8s-nlb-target" {
@@ -86,13 +85,3 @@ resource "yandex_lb_target_group" "k8s-worker-nodes" {
     address   = yandex_compute_instance.k8s-worker-2.network_interface.0.ip_address
   }
 }
-
-# resource "yandex_lb_target_group" "jenkins" {
-#   name      = "jenkins"
-#   region_id = "ru-central1"
-
-#   target {
-#     subnet_id = yandex_vpc_subnet.subnet_server.id
-#     address   = yandex_compute_instance.jenkins.network_interface.0.ip_address
-#   }
-# }
