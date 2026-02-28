@@ -17,6 +17,7 @@ resource "yandex_compute_instance" "k8s-master-1" {
   network_interface {
     index     = 1
     subnet_id = yandex_vpc_subnet.subnet_a.id
+    nat       = true
   }
 
   scheduling_policy {
@@ -48,6 +49,7 @@ resource "yandex_compute_instance" "k8s-worker-1" {
   network_interface {
     index     = 1
     subnet_id = yandex_vpc_subnet.subnet_b.id
+    nat       = true
   }
 
   scheduling_policy {
@@ -79,6 +81,7 @@ resource "yandex_compute_instance" "k8s-worker-2" {
   network_interface {
     index     = 1
     subnet_id = yandex_vpc_subnet.subnet_d.id
+    nat       = true
   }
 
   scheduling_policy {
